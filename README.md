@@ -1,11 +1,15 @@
 # Advent Calendar Challenge Solutions
 
+Note: AI was used to build tests, refactor (name/spell check), AI was also used for RubberDucking see https://en.wikipedia.org/wiki/Rubber_duck_debugging although its common enough I'm sure you're familiar. There was one instance Day 1 Section 2 where I had brought the solution close (4 additional ticks) and while RubberDucking Claude let slip the full solution....it did however apologize when reprimanded
+
+
+
 A collection of solutions for Advent-style programming challenges, implemented in JavaScript using ES modules.
 
 ## Project Structure
 
 ```
-Adventcal/
+AdventCalendar/
 ├── index.js              # Interactive console application (main entry point)
 ├── solutions/            # Individual solution files for each day
 │   ├── day1.js          # Day 1: Dial Password
@@ -29,7 +33,7 @@ Adventcal/
 
 ```bash
 # Clone the repository
-git clone https://github.com/derekhurrenkelly/adventcal.git
+git clone https://github.com/dcodified/adventcalendar.git
 cd Adventcal
 
 # Install dependencies (if any added later)
