@@ -228,6 +228,103 @@ runner.test('Day 2 - Sum of mirrors', () => {
     assertEquals(result, 495, 'Sum of mirrors 10-100 should be 495');
 });
 
+runner.test('Day 2 - Part 2 returns correct structure', () => {
+    const result = solveDay2();
+
+    assertEquals(typeof result.part2, 'number', 'Part 2 should return a number');
+});
+
+runner.test('Day 2 - Part 2 returns known answer', () => {
+    const result = solveDay2();
+    assertEquals(result.part2, 31680313976, 'Part 2 sum should be 31680313976');
+});
+
+runner.test('Day 2 - getDivisors validation', () => {
+    function getDivisors(n) {
+        const divisors = new Set();
+        for (let i = 1; i <= Math.sqrt(n); i++) {
+            if (n % i === 0) {
+                divisors.add(i);
+                divisors.add(n / i);
+            }
+        }
+        return Array.from(divisors).sort((a, b) => a - b);
+    }
+
+    // Test divisors of 12
+    const result = getDivisors(12);
+    assertEquals(JSON.stringify(result), JSON.stringify([1, 2, 3, 4, 6, 12]),
+        'Divisors of 12 should be [1, 2, 3, 4, 6, 12]');
+
+    // Test divisors of 8
+    const result2 = getDivisors(8);
+    assertEquals(JSON.stringify(result2), JSON.stringify([1, 2, 4, 8]),
+        'Divisors of 8 should be [1, 2, 4, 8]');
+});
+
+runner.test('Day 2 - isRepeatedPattern validation', () => {
+    function getDivisors(n) {
+        const divisors = new Set();
+        for (let i = 1; i <= Math.sqrt(n); i++) {
+            if (n % i === 0) {
+                divisors.add(i);
+                divisors.add(n / i);
+            }
+        }
+        return Array.from(divisors).sort((a, b) => a - b);
+    }
+
+    function isRepeatedPattern(value, divisors) {
+        const s = String(value);
+        const n = s.length;
+
+        for (const d of divisors) {
+            if (d === 0 || d === n) continue;
+            if (n % d !== 0) continue;
+
+            const chunk = s.slice(0, d);
+            const repeats = n / d;
+
+            if (chunk.repeat(repeats) === s) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Test repeated patterns
+    const divisors1 = getDivisors('1111'.length);
+    assertEquals(isRepeatedPattern(1111, divisors1), true,
+        '1111 is a repeated pattern (1 repeated 4 times)');
+
+    const divisors2 = getDivisors('123123'.length);
+    assertEquals(isRepeatedPattern(123123, divisors2), true,
+        '123123 is a repeated pattern (123 repeated 2 times)');
+
+    const divisors3 = getDivisors('55'.length);
+    assertEquals(isRepeatedPattern(55, divisors3), true,
+        '55 is a repeated pattern (5 repeated 2 times)');
+
+    // Test non-repeated patterns
+    const divisors4 = getDivisors('1234'.length);
+    assertEquals(isRepeatedPattern(1234, divisors4), false,
+        '1234 is not a repeated pattern');
+
+    const divisors5 = getDivisors('12341234'.length);
+    assertEquals(isRepeatedPattern(12341234, divisors5), true,
+        '12341234 is a repeated pattern (1234 repeated 2 times)');
+});
+
+runner.test('Day 2 - Part 2 includes more than just mirrors', () => {
+    const result = solveDay2();
+
+    // Part 2 checks ALL numbers in ranges for repetitive patterns, not just mirrors
+    // So Part 2 sum should be greater than Part 1 sum
+    const isGreater = result.part2 > result.part1;
+    assertEquals(isGreater, true,
+        'Part 2 should include all repetitive patterns, making it greater than Part 1');
+});
+
 // Run all tests
 runner.run().then(success => {
     process.exit(success ? 0 : 1);

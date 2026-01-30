@@ -105,12 +105,20 @@ Located in `solutions/day1.js` with exported `solve()` function that returns bot
 - Must have even number of digits
 
 **Part 1:** Find all mirror numbers in the given ranges and sum them.
-- **Solution:** 26,255,179,562...
+- **Solution:** 26,255,179,562
+
+**Part 2:** Find all invalid IDs (repetitive patterns) in the given ranges and sum them.
+- A number is invalid if it consists of a sequence repeated at least twice
+- Examples: `11` (1×2), `123123` (123×2), `1111` (1×4), `565656` (56×3)
+- Checks ALL numbers in ranges, not just mirror numbers
+- **Solution:** 31,680,313,976
 
 **Key Concepts:**
 - String manipulation for digit comparison
 - Range iteration and validation
 - Even-length number filtering
+- Pattern detection using divisors
+- Repetition validation
 
 **Implementation:**
 Located in `solutions/day2.js` with exported `solve()` function.
@@ -118,6 +126,8 @@ Located in `solutions/day2.js` with exported `solve()` function.
 Helper functions:
 - `isMirrorNumber(s)` - Validates if a number is a mirror number
 - `processMirrorRange(min, max)` - Finds all mirrors in a range
+- `getDivisors(n)` - Gets all divisors of a number for pattern checking
+- `isRepeatedPattern(value, divisors)` - Checks if a number is made of repeated digits
 
 ---
 

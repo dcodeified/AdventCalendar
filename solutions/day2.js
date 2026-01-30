@@ -3,7 +3,8 @@
  *
  * Problem: Find all "mirror numbers" within given ranges and sum them.
  * Mirror Number: A number where the first half of digits exactly matches the second half.
- */
+ * No AI Used here (aside from clean up/ refactoring)
+*/
 
 import { parseFileToArray } from '../adventutils.js';
 
@@ -66,11 +67,78 @@ function solvePart1() {
 }
 
 /**
- * Part 2: Not yet implemented
+ * Get list of divisors of a number
+ * Code completed with AI assistance
+ */
+function getDivisors(n) {
+    const divisors = new Set();
+    for (let i = 1; i <= Math.sqrt(n); i++) {
+        if (n % i === 0) {
+            divisors.add(i);
+            divisors.add(n / i);
+        }
+    }
+    return Array.from(divisors).sort((a, b) => a - b);
+}   
+
+/**
+ * Check if a number is made of a repeated pattern
+ */
+function isRepeatedPattern(value, divisors) {
+    const s = String(value);
+    const n = s.length;
+
+    for (const d of divisors) {
+        // skip full length and zero
+        if (d === 0 || d === n) continue;
+
+        // must repeat at least twice
+        if (n % d !== 0) continue;
+
+        const chunk = s.slice(0, d);
+        const repeats = n / d;
+
+        if (chunk.repeat(repeats) === s) {
+            return true; // matches repeated pattern
+        }
+    }
+
+    return false;
+}
+
+/**
+ * Part 2: Find all invalid IDs (repetitive patterns) in the ranges
+ * Now checking ALL numbers in ranges, not just mirror numbers
  */
 function solvePart2() {
-    // Placeholder for part 2
-    return null;
+    const ranges = parseFileToArray('./problem_files/problem_2', ',');
+    let allInvalidIds = [];
+
+    ranges.forEach(range => {
+        const parts = range.split('-');
+
+        if (parts.length !== 2) {
+            console.log("Invalid input: " + range);
+            return;
+        }
+
+        const min = parseInt(parts[0]);
+        const max = parseInt(parts[1]);
+
+        // Check ALL numbers in the range for repetitive patterns
+        for (let i = min; i <= max; i++) {
+            const string_divisors = getDivisors(i.toString().length);
+            if (isRepeatedPattern(i, string_divisors)) {
+                allInvalidIds.push(i);
+            }
+        }
+    });
+
+    const sum = allInvalidIds.reduce((total, n) => total + n, 0);
+
+    return {
+        sum
+    };
 }
 
 /**
@@ -78,16 +146,12 @@ function solvePart2() {
  */
 export function solve() {
     const part1Result = solvePart1();
+    const part2Result = solvePart2();
 
     return {
         day: 2,
         title: "Secret Entrance - Mirror Numbers",
         part1: part1Result.sum,
-        part2: solvePart2(),
-        details: {
-            mirrorCount: part1Result.mirrors.length,
-            // Store first few mirrors for display
-            sampleMirrors: part1Result.mirrors.slice(0, 10)
-        }
+        part2: part2Result.sum, 
     };
 }
