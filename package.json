@@ -1,0 +1,24 @@
+{
+  "name": "adventcal",
+  "version": "1.0.0",
+  "description": "Advent of Code calendar solutions",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node tests/adventutils.test.js && node tests/solutions.test.js",
+    "test:utils": "node tests/adventutils.test.js",
+    "test:solutions": "node tests/solutions.test.js"
+  },
+  "keywords": [
+    "advent-of-code",
+    "algorithms",
+    "challenges"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/derekhurrenkelly/adventcal.git"
+  },
+  "author": "",
+  "license": "ISC"
+}
