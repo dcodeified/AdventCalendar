@@ -34,7 +34,7 @@ AdventCalendar/
 ```bash
 # Clone the repository
 git clone https://github.com/dcodified/adventcalendar.git
-cd Adventcal
+cd AdventCalendar
 
 # Install dependencies (if any added later)
 npm install
